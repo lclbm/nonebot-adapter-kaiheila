@@ -310,6 +310,7 @@ class Adapter(BaseAdapter):
                             f"{'for bot ' + escape_tag(bot.self_id) if bot else ''}, {e}</bg #f8bbd0></r>",
                         )
                         need_reconnect = False
+                        ResultStore.set_sn(bot.self_id, 0)
                     except TokenError as e:
                         log(
                             "ERROR",
@@ -317,7 +318,9 @@ class Adapter(BaseAdapter):
                             f"{'for bot ' + escape_tag(bot.self_id) if bot else ''}, {e}</bg #f8bbd0></r>",
                         )
                         need_reconnect = False
+                        ResultStore.set_sn(bot.self_id, 0)
                     except Exception as e:
+                        # 非预期异常，需要重连，不重置sn
                         log(
                             "ERROR",
                             "<r><bg #f8bbd0>Error while process data from websocket"
