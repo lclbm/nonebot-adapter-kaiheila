@@ -255,6 +255,7 @@ class Adapter(BaseAdapter):
                 if bot_config.token:
                     headers["Authorization"] = f"Bot {bot_config.token}"
                 request = Request("GET", URL(url), headers=headers)
+                log("INFO", f"Connecting to {escape_tag(str(url))}")
                 async with self.websocket(request) as ws:
                     log(
                         "DEBUG",
@@ -306,7 +307,7 @@ class Adapter(BaseAdapter):
                     except ReconnectError as e:
                         log(
                             "ERROR",
-                            "<r><bg #f8bbd0>Server requests reconnect"
+                            "<r><bg #f8bbd0>Server requests reconnect "
                             f"{'for bot ' + escape_tag(bot.self_id) if bot else ''}, {e}</bg #f8bbd0></r>",
                         )
                         need_reconnect = False
